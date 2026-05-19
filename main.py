@@ -1,56 +1,66 @@
-# ============================================================
-# Archivo: main.py
-# Proyecto: Gestor de Combustible y Gastos de Vehículos
-# Rama: main
-# Responsable: Estudiante 1
-# Descripción: Programa principal con menú interactivo.
-#              Integra los módulos de registro, cálculos y búsqueda.
-# ============================================================
-
-from registro import registrar_gasto
-from calculos import mostrar_resumen
-from busqueda import buscar_por_placa
-
-# Lista principal donde se almacenan todos los gastos en memoria
+# Lista principal de datos
 gastos = []
 
+# Funciones vacías que los demás llenarán
+def registrar_gasto():
+    print("\n--- REGISTRAR NUEVO GASTO ---")
+    placa = input("Placa del vehículo: ").strip().upper()
+    concepto = input("Concepto (Ej: Gasolina, Peaje): ").strip().capitalize()
+    while True:
+        valor_str = input("Valor ($): ").strip()
+        try:
+            valor = float(valor_str)
+            if valor > 0: break
+            print("  ⚠ El valor debe ser mayor a 0.")
+        except ValueError:
+            print("  ⚠ Ingrese un número válido.")
+    
+    gastos.append({"placa": placa, "concepto": concepto, "valor": valor})
+    print("  ✅ Gasto registrado exitosamente.")
+
+def mostrar_resumen():
+    print("\n--- RESUMEN DE GASTOS ---")
+    if len(gastos) == 0:
+        print("  📭 No hay gastos registrados.")
+        return
+    
+    total = 0
+    for gasto in gastos:
+        total += gasto["valor"]
+        print(f"  Placa: {gasto['placa']} | Concepto: {gasto['concepto']} | Valor: ${gasto['valor']:,.2f}")
+    
+    print("-" * 30)
+    print(f"  TOTAL ACUMULADO: ${total:,.2f}")
+
+def buscar_gastos():
+    pass # El estudiante 4 programará aquí
 
 def mostrar_menu():
-    """Imprime el menú principal del programa."""
-    print("\n" + "="*45)
-    print("   GESTOR DE GASTOS DE VEHÍCULOS v1.0")
-    print("="*45)
-    print("  1. Registrar nuevo gasto")
-    print("  2. Ver resumen total de gastos")
+    print("\n" + "=" * 40)
+    print("  🚗 GESTOR DE GASTOS DE VEHÍCULOS 🚗")
+    print("=" * 40)
+    print("  1. Registrar gasto")
+    print("  2. Ver resumen de gastos")
     print("  3. Buscar gastos por placa")
     print("  4. Salir")
-    print("="*45)
-
+    print("=" * 40)
 
 def main():
-    """Función principal: ejecuta el bucle del menú interactivo."""
-    print("\n  Bienvenido al sistema de gestión de gastos.")
-
     while True:
         mostrar_menu()
         opcion = input("  Seleccione una opción (1-4): ").strip()
-
+        
         if opcion == "1":
-            registrar_gasto(gastos)
-
+            registrar_gasto()
         elif opcion == "2":
-            mostrar_resumen(gastos)
-
+            mostrar_resumen()
         elif opcion == "3":
-            buscar_por_placa(gastos)
-
+            buscar_gastos()
         elif opcion == "4":
-            print("\n  Gracias por usar el gestor. ¡Hasta luego!\n")
+            print("\n  👋 ¡Hasta pronto!\n")
             break
-
         else:
-            print("\n  [ERROR] Opción inválida. Por favor elija entre 1 y 4.")
-
+            print("\n  ⚠ Opción no válida.")
 
 if __name__ == "__main__":
     main()
