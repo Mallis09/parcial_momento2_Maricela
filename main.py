@@ -19,7 +19,18 @@ def registrar_gasto():
     print("  ✅ Gasto registrado exitosamente.")
 
 def mostrar_resumen():
-    pass # El estudiante 3 programará aquí
+    print("\n--- RESUMEN DE GASTOS ---")
+    if len(gastos) == 0:
+        print("  📭 No hay gastos registrados.")
+        return
+    
+    total = 0
+    for gasto in gastos:
+        total += gasto["valor"]
+        print(f"  Placa: {gasto['placa']} | Concepto: {gasto['concepto']} | Valor: ${gasto['valor']:,.2f}")
+    
+    print("-" * 30)
+    print(f"  TOTAL ACUMULADO: ${total:,.2f}")
 
 def buscar_gastos():
     pass # El estudiante 4 programará aquí
