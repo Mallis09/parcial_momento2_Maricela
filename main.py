@@ -33,7 +33,21 @@ def mostrar_resumen():
     print(f"  TOTAL ACUMULADO: ${total:,.2f}")
 
 def buscar_gastos():
-    pass # El estudiante 4 programará aquí
+    print("\n--- BUSCAR GASTOS POR PLACA ---")
+    if len(gastos) == 0:
+        print("  📭 No hay gastos registrados.")
+        return
+        
+    placa_buscar = input("Ingrese la placa a buscar: ").strip().upper()
+    encontrado = False
+    
+    for gasto in gastos:
+        if gasto["placa"] == placa_buscar:
+            encontrado = True
+            print(f"  Concepto: {gasto['concepto']} | Valor: ${gasto['valor']:,.2f}")
+    
+    if not encontrado:
+        print(f"  ❌ No se encontraron gastos para la placa: {placa_buscar}")
 
 def mostrar_menu():
     print("\n" + "=" * 40)
